@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title>チームメンバー一覧</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body class="min-h-screen bg-slate-100 p-6">
+        <div class="mx-auto max-w-md">
+            <h1 class="mb-6 text-center text-2xl font-bold text-slate-800">会員登録</h1>
+            <form id="registerForm" novalidate
+                  class="space-y-4 rounded-xl bg-white p-6 shadow">
+
+                <div>
+                    <label for="name" class="mb-1 block font-medium">名前</label>
+                    <input type="text" id="name" required placeholder="佐藤はる"
+                        class="w-full rounded border border-slate-300 px-3 py-2">
+                    <p id="nameError" class="mt-1 text-sm text-red-500"></p>
+                </div>
+
+                <div>
+                    <label for="email" class="mb-1 block font-medium">メールアドレス</label>
+                    <input type="email" id="email" required placeholder="example@email.com"
+                        class="w-full rounded border border-slate-300 px-3 py-2">
+                    <p id="emailError" class="mt-1 text-sm text-red-500"></p>
+                </div>
+
+                <div>
+                    <label for="password" class="mb-1 block font-medium">パスワード</label>
+                    <input type="password" id="password" required placeholder="8文字以上"
+                        class="w-full rounded border border-slate-300 px-3 py-2">
+                    <p id="passwordError" class="mt-1 text-sm text-red-500"></p>
+                </div>
+
+                <div>
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" id="terms" required class="h-4 w-4">
+                        <span class="text-sm">利用規約に同意する</span>
+                    </label>
+                    <p id="termsError" class="mt-1 text-sm text-red-500"></p>
+                </div>
+
+                <p id="result" class="text-center text-sm font-bold"></p>
+
+                <button type="submit" class="w-full rounded bg-blue-600 py-3 font-bold text-white hover:bg-blue-700">
+                    登録する
+                </button>
+
+            </form>
+        </div>
+
+        <script>
+            const form = document.getElementById("registerForm");
+
+            const nameInput = document.getElementById("name");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            const termsInput = document.getElementById("terms");
+
+            const nameError = document.getElementById("nameError");
+            const emailError = document.getElementById("emailError");
+            const passwordError = document.getElementById("passwordError");
+            const termsError = document.getElementById("termsError");
+
+            const result = document.getElementById("result");
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const terms = termsInput.checked;
+
+                nameError.textContent = "";
+                emailError.textContent = "";
+                passwordError.textContent = "";
+                termsError.textContent = "";
+                result.textContent = "";
+
+                let isValid = true;
+
+                if (name === "") {
+                    nameError.textContent = "名前を入力してください";
+                    isValid = false;
+                }
+
+                if (email === "") {
+                    emailError.textContent = "メールアドレスを入力してください";
+                    isValid = false;
+
+                } else if (!email.includes("@") || !email.includes(".")) {
+                    emailError.textContent = "正しいメールアドレスを入力してください";
+                    isValid = false;
+                }
+
+                if (password === "") {
+                    passwordError.textContent = "パスワードを入力してください";
+                    isValid = false;
+
+                } else if (password.length < 8) {
+                    passwordError.textContent = "パスワードは8文字以上にしてください";
+                    isValid = false;
+                }
+
+                if (!terms) {
+                    termsError.textContent = "利用規約に同意してください";
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    result.textContent = "登録完了！";
+                    result.className = "text-center text-sm font-bold text-green-600";
+
+                    form.reset();
+
+                } else {
+                    result.textContent = "入力内容を確認してください";
+                    result.className = "text-center text-sm font-bold text-red-500";
+                }
+
+            });
+        </script>
+    </body>
+
+</html>
